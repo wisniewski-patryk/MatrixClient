@@ -1,4 +1,5 @@
 import React, { useState, type FormEvent } from 'react';
+import LoginService from '../services/login.service';
 
 type LoginFormState = {
 	login: string;
@@ -23,7 +24,12 @@ const LoginPage: React.FC = () => {
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		// Handle login logic here
+		const credentials = {
+			username: form.login,
+			password: form.password,
+			baseUrl: form.server
+		};
+		LoginService.login(credentials);
 	};
 
 	return (
