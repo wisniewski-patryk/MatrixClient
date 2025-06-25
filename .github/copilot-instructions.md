@@ -1,3 +1,13 @@
-<!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
+# GitHub Copilot Instructions
 
-This project is a React frontend application bootstrapped with Vite.js and TypeScript. Use tabs (tab size 4) for indentation. Use ESModules and Bootstrap 5.3 for styling. Ensure all code and configuration files follow these conventions.
+- Use TypeScript for all code samples and files.
+- Use tabs (not spaces) for indentation in all files.
+- Follow the project's `.editorconfig` and formatting settings.
+- Prefer modern, idiomatic TypeScript and React patterns.
+- Ensure all code is compatible with the current project setup.
+- Do not use JavaScript unless explicitly requested.
+- All new files and edits must use tab indentation.
+- Do not include unnecessary comments or boilerplate.
+- Use strict typing and avoid `any` where possible.
+- Ensure code is linted and passes `npm run lint`.
+
