@@ -1,11 +1,9 @@
 import './App.css';
-import LoginPage from './pages/login.page';
+import RouterComponent from './Router';
 
 function App() {
 	return (
-		<>
-			<LoginPage />
-		</>
+		<RouterComponent/>
 	);
 }
 
