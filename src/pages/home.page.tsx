@@ -1,6 +1,17 @@
 import { type FC } from 'react';
+import LoginService from '../services/login.service';
 
 const HomePage: FC = () => {
+	const handleLogout = async () => {
+		LoginService.logout().then(() => {
+			console.log("Logout successful");
+			// localStorage.clear();
+			//window.location.href = '/login';
+		}).catch(error => {
+			console.error("Logout failed:", error);
+		});
+	};
+
 	return (
 		<div className="container mt-5">
 			<div className="row justify-content-center">
@@ -14,6 +25,9 @@ const HomePage: FC = () => {
 						Explore the features and enjoy the modern UI powered by Bootstrap 5.3.
 					</p>
 				</div>
+				<button onClick={handleLogout}>
+					logout
+				</button>
 			</div>
 		</div>
 	);

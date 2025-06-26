@@ -27,8 +27,8 @@ class LoginService {
 
 	async login(credentials: LoginCredentials): Promise<LoginResponse> {
 		ConfigService.setBaseUrl(credentials.baseUrl);
-
-		const response = await fetch(`${credentials.baseUrl}/login`, {
+		const path = "_matrix/client/v3/login";
+		const response = await fetch(`${credentials.baseUrl}/${path}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -39,7 +39,8 @@ class LoginService {
 					type: 'm.id.user',
 					user: credentials.username,
 				},
-				password: credentials.password
+				password: credentials.password,
+				initial_device_display_name: 'MatrixClient Web App'
 			})
 		});
 
@@ -48,6 +49,16 @@ class LoginService {
 		}
 
 		return response.json() as Promise<LoginResponse>;
+	}
+
+	async logout(): Promise<void>{
+		const url = localStorage.getItem('home_server');
+		await fetch(`https://${url}/_matrix/client/v3/logout`, {
+			method: 'POST',
+			headers: {
+				'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+			}
+		});
 	}
 }
 

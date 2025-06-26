@@ -29,7 +29,14 @@ const LoginPage: React.FC = () => {
 			password: form.password,
 			baseUrl: form.server
 		};
-		LoginService.login(credentials);
+		LoginService.login(credentials).then(response => {
+			Object.entries(response).forEach(([key, value]) => {
+				localStorage.setItem(key, value);
+			});
+			window.location.href = '/';
+		}).catch(error => {
+			console.error("Login failed:", error);
+		});
 	};
 
 	return (
