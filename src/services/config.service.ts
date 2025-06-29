@@ -43,4 +43,4 @@ class ConfigService {
 	}
 }
 
-export default ConfigService.getInstance();
+export default ConfigService;

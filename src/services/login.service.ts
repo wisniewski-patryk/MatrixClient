@@ -1,5 +1,3 @@
-import ConfigService from './config.serivce';
-
 interface LoginResponse {
 	access_token: string;
 	expires_in?: number;
@@ -15,7 +13,7 @@ interface LoginCredentials {
 
 class LoginService {
 	private static instance: LoginService;
-
+	private readonly server_address: string = "home_server";
 	private constructor() {}
 
 	static getInstance(): LoginService {
@@ -26,9 +24,8 @@ class LoginService {
 	}
 
 	async login(credentials: LoginCredentials): Promise<LoginResponse> {
-		ConfigService.setBaseUrl(credentials.baseUrl);
-		const path = "_matrix/client/v3/login";
-		const response = await fetch(`${credentials.baseUrl}/${path}`, {
+		localStorage.setItem(this.server_address, credentials.baseUrl);
+		const response = await fetch(`${credentials.baseUrl}/_matrix/client/v3/login`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -52,12 +49,14 @@ class LoginService {
 	}
 
 	async logout(): Promise<void>{
-		const url = localStorage.getItem('home_server');
+		const url = localStorage.getItem(this.server_address);
 		await fetch(`https://${url}/_matrix/client/v3/logout`, {
 			method: 'POST',
 			headers: {
 				'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
 			}
+		}).then(() => {
+			localStorage.clear();
 		});
 	}
 }

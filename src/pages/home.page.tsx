@@ -4,9 +4,7 @@ import LoginService from '../services/login.service';
 const HomePage: FC = () => {
 	const handleLogout = async () => {
 		LoginService.logout().then(() => {
-			console.log("Logout successful");
-			// localStorage.clear();
-			//window.location.href = '/login';
+			window.location.href = '/login';
 		}).catch(error => {
 			console.error("Logout failed:", error);
 		});
