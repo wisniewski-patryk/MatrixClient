@@ -31,7 +31,7 @@ const LoginPage: React.FC = () => {
 		};
 		LoginService.login(credentials).then(response => {
 			Object.entries(response).forEach(([key, value]) => {
-				localStorage.setItem(key, value);
+				localStorage.setItem(key, String(value));
 			});
 			window.location.href = '/';
 		}).catch(error => {
