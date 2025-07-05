@@ -1,18 +1,24 @@
 import React, { useState, type FormEvent } from 'react';
-import LoginService from '../services/login.service';
+import MatrixService from '../services/matrix.service';
 
-type LoginFormState = {
+type LoginPageProperties = {
+	onLogin: () => void;
+}
+
+type LoginForm = {
 	login: string;
 	password: string;
 	server: string;
 };
 
-const LoginPage: React.FC = () => {
-	const [form, setForm] = useState<LoginFormState>({
+const LoginPage: React.FC<LoginPageProperties> = ({ onLogin }) => {
+	const [form, setForm] = useState<LoginForm>({
 		login: '',
 		password: '',
 		server: 'https://matrix.org'
-	});
+	})
+
+	const matrixService: MatrixService = MatrixService.getInstance();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -24,19 +30,14 @@ const LoginPage: React.FC = () => {
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		const credentials = {
-			username: form.login,
-			password: form.password,
-			baseUrl: form.server
-		};
-		LoginService.login(credentials).then(response => {
-			Object.entries(response).forEach(([key, value]) => {
-				localStorage.setItem(key, String(value));
+		matrixService.setBaseUrl(form.server);
+		matrixService.login(form.login, form.password)
+			.then(() => {
+				onLogin();
+			})
+			.catch(err => {
+				console.error('Login failed:', err);
 			});
-			window.location.href = '/';
-		}).catch(error => {
-			console.error("Login failed:", error);
-		});
 	};
 
 	return (

@@ -1,9 +1,16 @@
+import { useState } from 'react';
 import './App.css';
-import RouterComponent from './Router';
+import LoginPage from './pages/login.page';
+import HomePage from './pages/home.page';
 
 function App() {
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	return (
-		<RouterComponent/>
+		isLoggedIn ? (
+			<HomePage />
+		) : (
+			<LoginPage onLogin={() => setIsLoggedIn(true)} />
+		)
 	);
 }
 
